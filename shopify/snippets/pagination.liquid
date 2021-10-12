@@ -1,0 +1,20 @@
+{% if paginate.pages > 1 %}
+  <nav aria-label="Page navigation" class="mt-10 lg:mt-20">
+    <ul class="flex items-center justify-center space-x-5 md:space-x-8">
+        {% if paginate.previous.is_link %}
+          <li><a href="{{ paginate.previous.url }}">{{ paginate.previous.title }}</a></li>
+        {% endif %}
+
+        {% for part in paginate.parts %}
+        {% if part.is_link %}
+          <li><a href="{{ part.url }}">{{ part.title }}</a></li>
+        {% else %}
+          <li class="text-gray-500"><a href="{{ part.url }}">{{ part.title }}</a></li>
+        {% endif %}
+        {% endfor %}
+        {% if paginate.next.is_link %}
+        <li><a href="{{ paginate.next.url }}">{{ paginate.next.title }}</a></li>
+        {% endif %}
+    </ul>
+  </nav>
+{% endif %}

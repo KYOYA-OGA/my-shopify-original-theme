@@ -1,0 +1,57 @@
+<div class="bg-gray-100">
+  <div class="myContainer">
+    <div class="max-w-2xl mx-auto py-16 sm:py-24 lg:py-32 lg:max-w-none">
+      <h2 class="text-2xl font-extrabold text-gray-900">{{ section.settings.title }}</h2>
+      <div class="mt-6 space-y-12 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-x-6">
+
+        {% for item in collections[section.settings.featured_collection].products %}
+          {% assign image = item.featured_media.preview_image %}
+          <div class="group relative">
+            <div class="relative w-full h-80 bg-white rounded-lg overflow-hidden group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1">
+              {% if image != blank %}
+                <img src="{{ image | img_url: 'medium' }}" alt="{{ item.featured_media.preview_image.alt }}" class="w-full h-full object-center object-cover">
+              {% else %}
+                {{ 'product-1' | placeholder_img_tag: 'w-full h-full object-center object-cover' }}
+              {% endif %}
+            </div>
+
+            <h3 class="mt-6 text-sm text-gray-500">
+              <a href="{{ item.url }}">
+                <span class="absolute inset-0"></span>
+                {{ item.title }}
+              </a>
+            </h3>
+            <p class="text-base font-semibold text-gray-900">{{ item.price | money_without_trailing_zeros }}</p>
+          </div>
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "Featured Collection",
+    "settings": [
+      {
+        "type": "collection",
+        "id": "featured_collection",
+        "label": "Collection"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Featured Collection"
+      }
+    ],
+    "presets":[
+      {
+        "category": "Collection",
+        "name": "Featured Collection"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,67 @@
+<section class="h-[50vh] flex justify-center items-center flex-1 flex-shrink-0  overflow-hidden relative">
+  <!-- image - start -->
+  {% if section.settings.image != blank %}
+    <img src="{{ section.settings.image | img_url: 'master' }}" alt="{{ section.settings.image.alt }}" class="w-full h-full object-cover object-center absolute inset-0 z-0">
+  {% else %}
+    {% capture current %}{% cycle '1', '2' %}{% endcapture %}
+    {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg'  }}
+  {% endif %}
+  <!-- image - end -->
+
+  <!-- text start -->
+  <div class="absolute sm:max-w-xl flex flex-col items-center p-4 z-10">
+
+    <h1 class="text-white text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-8 md:mb-12">{{ section.settings.title }}</h1>
+    <div class="text-indigo-200 text-lg sm:text-xl text-center mb-4 md:mb-8">{{ section.settings.description }}</div>
+
+    <div class="w-full flex flex-col sm:flex-row sm:justify-center gap-2.5">
+      <a href="{{ section.settings.button_link }}" class="button">{{ section.settings.button_label }}</a>
+    </div>
+  </div>
+  <!-- text end -->
+</section>
+
+
+
+{% schema %}
+  {
+    "name": "Hero",
+    "class": "hero-section",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Heading Background Image"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "default": "Revolutionary way to build the web",
+        "label": "Heading Title"
+      },
+      {
+        "type": "richtext",
+        "id": "description",
+        "label": "Heading Description",
+        "default": "<p>Lorem ipsum dolor sit amet</p></p>"
+      },
+      {
+        "type": "text",
+        "id": "button_label",
+        "label": "Heading Button",
+        "default": "Start now"
+      },
+      {
+        "type": "url",
+        "id": "button_link",
+        "label": "Heading Button Link"
+      }
+    ],
+    "presets":[
+      {
+        "category": "Hero",
+        "name": "Simple Hero"
+      }
+    ]
+  }
+{% endschema %}
