@@ -1,11 +1,25 @@
 {
   "sections": {
     "hero": {
-      "type": "hero"
+      "type": "hero",
+      "settings": {
+        "image": "shopify:\/\/shop_images\/pexels-james-wheeler-417074.jpg",
+        "title": "Revolutionary way to build the web",
+        "description": "<p>Lorem ipsum dolor sit amet<\/p><p><\/p>",
+        "button_label": "Start now",
+        "button_link": ""
+      }
     },
     "featured-collection": {
-      "type": "featured-collection"
+      "type": "featured-collection",
+      "settings": {
+        "featured_collection": "frontpage",
+        "title": "Featured Collection"
+      }
     }
   },
-  "order": ["hero", "featured-collection"]
+  "order": [
+    "hero",
+    "featured-collection"
+  ]
 }

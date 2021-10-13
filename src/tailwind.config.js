@@ -4,7 +4,7 @@
  * docs: https://tailwindcss.com/docs/configuration
  * default: https://github.com/tailwindcss/tailwindcss/blob/master/stubs/defaultConfig.stub.js
  */
-const path = require('path')
+const path = require('path');
 
 module.exports = {
   mode: 'jit',
@@ -13,16 +13,16 @@ module.exports = {
     extend: {},
     container: {
       center: true,
-      padding: '1rem'
-    }
+      padding: '1rem',
+    },
   },
   variants: {},
-  plugins: [],
+  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
   purge: {
     enabled: process.env.NODE_ENV === 'production',
     content: [
       path.resolve(__dirname, '**/*.{js,vue}'),
-      path.resolve(__dirname, '../shopify/**/*.liquid')
-    ]
-  }
-}
+      path.resolve(__dirname, '../shopify/**/*.liquid'),
+    ],
+  },
+};

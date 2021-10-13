@@ -1,25 +1,98 @@
-<div class="container">
-  <div>
-    {% for link in linklists.footer.links %}
-      <a href="{{ link.url }}">
-        {{ link.title }}
-      </a>
+<footer class="bg-gray-100 py-5 md:py-10">
+  <div class="myContainer">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4">
+    {% for block in section.blocks %}
+      {% assign item = block.settings %}
+      {% if block.type == "link_list" %}
+        <div>
+          <h4>{{ item.title }}</h4>
+          {% assign footer_linklist = item.menu %}
+          <ul class="mt-5 space-y-3">
+            {% for link in linklists[footer_linklist].links %}
+              <li><a class="text-blue-600 hover:text-blue-900 focus:text-blue-900" href="{{ link.url }}">{{ link.title | escape }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% elsif block.type == 'text' %}
+        <div class="text-center">
+          <img src="{{ item.logo  | img_url: 'medium'}}" alt="{{ item.logo.alt }}" class="mx-auto">
+          <h4>{{ item.title }}</h4>
+          <p>{{ item.description }}</p>
+        </div>
+
+      {% endif %}
+
     {% endfor %}
+    </div>
   </div>
 
-  <div>
-    &copy; Shopify Theme Lab
+  {% if section.settings.enable_payment_type_icons %}
+    <div class="flex items-center">
+      {% for payment_type in shop.enable_payment_types %}
+        <img src="{{ payment_type | payment_type_img_url }}" alt="">
+      {% endfor %}
+    </div>
+  {% endif %}
+
+
+  <div class="text-center pt-5">
+    &copy; {{ shop.name }}
   </div>
-</div>
+</footer>
 
 {% schema %}
 {
-  "name": "t:sections.footer.name",
-  "settings": [
-    {
-      "type": "paragraph",
-      "content": "t:sections.footer.settings.paragraph"
-    }
-  ]
+    "name": "Footer",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "enable_payment_type_icons",
+            "label": "Enable Payment Type Icons",
+            "default": true
+        }
+    ],
+    "max_blocks": 4,
+    "blocks": [
+        {
+            "type": "link_list",
+            "name": "Navigation",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Quick Links"
+                },
+                {
+                    "type": "link_list",
+                    "id": "menu",
+                    "label": "Menu"
+                }
+
+            ]
+        },
+        {
+            "type": "text",
+            "name": "Store details",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "logo",
+                    "label": "Store Logo"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Heading",
+                    "default": "Store information"
+                },
+                {
+                    "type": "richtext",
+                    "id": "description",
+                    "label": "Text"
+                }
+            ]
+        }
+    ]
 }
 {% endschema %}
